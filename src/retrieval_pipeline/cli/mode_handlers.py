@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Literal
 
@@ -152,6 +153,24 @@ def run_agent_mode(pipeline: RetrievalPipeline, config: PipelineConfig) -> None:
 
     from src.retrieval_pipeline.agent.tools import send_email, web_search
     from src.retrieval_pipeline.llm.prompts import get_agent_system_prompt
+
+    if config.langsmith_tracing:
+        if config.langsmith_api_key:
+            os.environ["LANGSMITH_TRACING"] = "true"
+            os.environ["LANGCHAIN_TRACING_V2"] = "true"
+            os.environ["LANGSMITH_ENDPOINT"] = config.langsmith_endpoint
+            os.environ["LANGSMITH_API_KEY"] = config.langsmith_api_key
+            os.environ["LANGSMITH_PROJECT"] = config.langsmith_project
+            logger.info(
+                "LangSmith tracing enabled for agent mode | project='{}' endpoint='{}'",
+                config.langsmith_project,
+                config.langsmith_endpoint,
+            )
+        else:
+            logger.warning(
+                "LangSmith tracing enabled in config, but LANGSMITH_API_KEY is empty. "
+                "Agent tracing will not be exported."
+            )
 
     llm = ChatGroq(
         model=config.groq_model,
