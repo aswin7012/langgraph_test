@@ -1,0 +1,92 @@
+[project]
+name = "retrieval-pipeline"
+version = "0.1.0"
+description = "A modular document retrieval and reranking pipeline"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "accelerate",
+    "beautifulsoup4",
+    "chromadb",
+    "docling",
+    "httpx",
+    "langchain-groq",
+    "langgraph",
+    "jq",
+    "langchain",
+    "langchain-classic",
+    "langchain-chroma",
+    "langchain-community",
+    "langchain-docling",
+    "langchain-huggingface",
+    "langchain-text-splitters",
+    "loguru",
+    "pandas",
+    "pypdf",
+    "python-docx",
+    "python-pptx",
+    "requests",
+    "sentence-transformers",
+    "tiktoken",
+    "torch",
+    "torchaudio",
+    "torchvision",
+    "transformers",
+    "python-dotenv",
+    "unstructured",
+    "pydantic-settings",
+    "pre-commit>=4.5.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 108
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "E",    # style errors
+    "W",    # style warnings
+    "F",    # logical errors
+    "I",    # import sorting
+    "B",    # bug-prone patterns
+    "UP",   # modern Python upgrades
+    "D",    # docstring rules
+    "T20",  # print usage
+    "A",    # built-in shadowing
+    "COM",  # comma consistency
+    "EM",   # exception message style
+    "ERA",  # dead/commented code
+    "G",    # logging format
+    "ANN",  # type annotations
+    "RUF",  # Ruff-specific rules
+    "SLF",  # private member access
+    "BLE",  # exception handling safety
+    "TRY",  # exception best practices
+    "C90",  # complexity
+    "PL",   # general code quality
+    "FBT",  # boolean traps
+    "N",    # naming conventions
+]
+
+ignore = [
+    "D203",    # incompatible docstring rule
+    "D213",    # incompatible docstring rule
+    "ANN101",  # self annotation (legacy compatibility)
+    "ANN102",  # cls annotation (legacy compatibility)
+    "PLR0913", # too many arguments
+    "FBT001",  # boolean positional args
+    "FBT002",  # boolean defaults
+    "TRY003",  # long exception messages
+    "EM102",   # f-string in exceptions
+    "COM812",  # handled by formatter
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"src/retrieval_pipeline/retrieval/display.py" = ["T20"]  # allow print for CLI output
